@@ -25,7 +25,6 @@ public class OrderService {
         Order order = new Order();
         order.setStatus("PENDING");
         double totalItemsAmount =0;
-
         for(OrderItemDto item : orderRequest.getOrderItems()){
             OrderItem orderItem = new OrderItem();
             orderItem.setName(item.getName());
@@ -41,13 +40,14 @@ public class OrderService {
         }
         order.setTotalItemsAmount(totalItemsAmount);
         double totalAmount =0;
-        double taxAmount =10;
+        double taxAmount =20;
         totalAmount = totalItemsAmount + taxAmount;
         order.setTotalAmount(totalAmount);
         order.setTaxAmount(taxAmount);
         String refId = UUID.randomUUID().toString();
         order.setReferenceId(refId);
 
+	//Save the order in OrderRepository
         orderRepository.save(order);
         return new OrderCreated(refId);
     }
